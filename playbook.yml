@@ -1,0 +1,13 @@
+---
+- hosts: all
+  sudo: true
+  tasks:
+    - name: update apt cache
+      apt: update_cache=yes
+    #- name: Installing required packages
+    #  apt: name={{ item }} state=present
+    - include: tasks/tools.yml
+    #- name: install heroku tools
+    #  shell: wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+    #- name: generate ssh key for github
+    # TODO: turn this MESS into a series of package and platform related tasks

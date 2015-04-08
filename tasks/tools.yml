@@ -1,0 +1,56 @@
+---
+- name: install dev tools
+  apt: name={{ item }} state=present
+  with_items:
+    - vim
+    - zsh
+    - git
+- name: cloning dotfiles
+  git: 
+    repo=git://github.com/clebrun/dotfiles 
+    dest=/home/vagrant/dotfiles 
+    clone=yes 
+    accept_hostkey=yes
+- name: delete default files
+  file: path=/home/vagrant/{{ item }} state=absent
+  with_items:
+    - .zshrc
+    - .vim
+- name: symlinking dotfiles into home folder
+  file: 
+    src={{ item.src }}
+    dest={{ item.dest }}
+    owner=vagrant
+    state=link
+  with_items:
+    - { src: "/home/vagrant/dotfiles/.zshrc", dest: "/home/vagrant/.zshrc" }
+    - { src: "/home/vagrant/dotfiles/.gitconfig", dest: "/home/vagrant/.gitconfig" }
+- name: set default shell to zsh
+  shell: chsh -s $(which zsh) vagrant
+- name: chown .zshrc to vagrant
+  file: dest=/home/vagrant/dotfiles/.zshrc owner=vagrant
+- name: deleting default .vim folder
+  file: 
+    path=/home/vagrant/.vim 
+    state=absent
+- name: cloning .vim into home folder
+  git: 
+    repo=git://github.com/clebrun/.vim 
+    dest=/home/vagrant/.vim 
+    clone=yes 
+    accept_hostkey=yes
+- name: deleting vundle out of .vim folder
+  file: 
+    path=/home/vagrant/.vim/bundle/Vundle.vim 
+    state=absent
+- name: cloning vundle into bundle folder
+  git: 
+    repo=git://github.com/gmarik/vundle 
+    dest=/home/vagrant/.vim/bundle/Vundle.vim 
+    clone=yes 
+    accept_hostkey=true
+- name: chown directories to vagrant
+  file: 
+    dest=/home/vagrant/.vim 
+    owner=vagrant 
+    recurse=yes
