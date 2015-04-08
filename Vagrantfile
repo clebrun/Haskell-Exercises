@@ -6,4 +6,5 @@ Vagrant.configure(2) do |config|
   config.vm.provision :ansible do |ans|
     ans.playbook = "playbook.yml"
   end
+  config.ssh.shell = "/usr/bin/zsh"
 end
