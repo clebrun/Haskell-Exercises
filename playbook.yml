@@ -7,6 +7,7 @@
     #- name: Installing required packages
     #  apt: name={{ item }} state=present
     - include: tasks/tools.yml
+    - include: tasks/haskell.yml
     #- name: install heroku tools
     #  shell: wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
     #- name: generate ssh key for github

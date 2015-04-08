@@ -1,0 +1,16 @@
+---
+- name: install ghc repo
+  apt-repository: repo='ppa:hvr/ghc'
+- name: update apt to bring in ghc packages
+  apt: update_cache=yes
+- name: install haskell packages
+  apt: name={{ item }} state=present
+  with_item:
+    - python-software-properties
+    - software-properties-common
+    - cabal-install-1.20 
+    - ghc-7.8.4 
+    - happy-1.19.4 
+    - alex-3.1.3
+- name: add haskell paths to config
+  shell: echo "export PATH='$HOME/.cabal-sandbox/bin:$HOME/.cabal/bin:/opt/cabal/1.20/bin:/opt/ghc/7.8.4/bin:/opt/happy/1.19.4/bin:/opt/alex/3.1.3/bin:$PATH' >> /home/vagrant/dotfiles/.zshrc"
