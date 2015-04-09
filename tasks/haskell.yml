@@ -1,11 +1,11 @@
 ---
 - name: install ghc repo
-  apt-repository: repo='ppa:hvr/ghc'
+  apt_repository: repo='ppa:hvr/ghc'
 - name: update apt to bring in ghc packages
   apt: update_cache=yes
 - name: install haskell packages
   apt: name={{ item }} state=present
-  with_item:
+  with_items:
     - python-software-properties
     - software-properties-common
     - cabal-install-1.20 
