@@ -1,0 +1,11 @@
+directories %w(spec)
+
+clearing :on
+
+def run file
+  `runhaskell #{file}`
+end
+
+guard :shell do
+  watch(/(.*).hs/) {|m| run m[0]}
+end
