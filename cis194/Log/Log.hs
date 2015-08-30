@@ -4,8 +4,8 @@ module Log where
 
 import Control.Applicative
 
-data MessageType = Info
-                 | Warning
+data MessageType = Info Int
+                 | Warning Int
                  | Error Int
   deriving (Show, Eq)
 
